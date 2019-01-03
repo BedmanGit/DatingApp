@@ -22,7 +22,8 @@ import { HomeComponent } from './home/home.component';
       FormsModule
    ],
    providers: [
-      AuthService
+      AuthService,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent
