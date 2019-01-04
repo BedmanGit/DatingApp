@@ -19,13 +19,14 @@
         <a class="nav-link" href="#">Message</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="loggedIn()" (click)="logout()">Logout</a>
+        <a class="nav-link" href="#" *ngIf="loggedIn()" (click)="logout()">
+          <i class="fa fa-sign-out">Logout</i></a>
       </li>
     </ul>
 
     <div class="dropdown" *ngIf="loggedIn()">
       <a class="dropdown-toggle text-light">
-        Welcome User
+        Welcome User {{model.username}}
       </a>
     
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
