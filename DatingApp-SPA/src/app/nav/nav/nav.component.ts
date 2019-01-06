@@ -19,14 +19,13 @@ model: any = {};
     this.authService.login(this.model).subscribe(next => {
       this.alertify.success('log in success!');
     }, error => {
-      // this.alertify.error(error.message);
-      console.log(error);
+      this.alertify.error(error.message);
+      // console.log(error);
     });
   }
 
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logout() {
