@@ -19,7 +19,8 @@ model: any = {};
     this.authService.login(this.model).subscribe(next => {
       this.alertify.success('log in success!');
     }, error => {
-      this.alertify.error(error.message);
+      // this.alertify.error(error.message);
+      console.log(error);
     });
   }
 
