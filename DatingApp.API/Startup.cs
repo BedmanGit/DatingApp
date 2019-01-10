@@ -38,8 +38,13 @@ namespace DatingApp.API
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddCors();
             services.AddTransient<Seed>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(opt => {
+                    opt.SerializerSettings.ReferenceLoopHandling 
+                        = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             services.AddScoped<IAuthRepository,  AuthRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
                 options.TokenValidationParameters = new TokenValidationParameters(){
                     ValidateIssuerSigningKey = true,
@@ -75,7 +80,7 @@ namespace DatingApp.API
                 });
             });
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            seeder.SeedUsers();
+           // seeder.SeedUsers();
             app.UseAuthentication();
             app.UseMvc();
 
