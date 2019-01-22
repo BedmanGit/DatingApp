@@ -40,6 +40,7 @@ namespace DatingApp.API
             services.AddCors();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling 
