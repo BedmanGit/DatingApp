@@ -5,6 +5,7 @@ import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/_services/Auth.service';
+import { Photo } from 'src/app/_models/photo';
 
 @Component({
   selector: 'app-member-edit',
@@ -27,6 +28,10 @@ unloadNotification($event: any) {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+  }
+
+  setMain(photoUrl: string) {
+    this.user.photoUrl = photoUrl;
   }
 
   updateUser(): void {

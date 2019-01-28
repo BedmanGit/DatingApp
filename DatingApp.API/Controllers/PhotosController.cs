@@ -62,7 +62,7 @@ namespace DatingApp.API.Controllers
                     var uploadParam = new ImageUploadParams()
                     {
                         File = new FileDescription(file.Name, stream),
-                        Transformation = new Transformation().Width(500).Height(500).Crop("fill").Gravity("face")
+                        Transformation = new Transformation().Width(800).Height(800).Crop("fill").Gravity("face")
                     };
 
                     uploadResult = cloudinary.Upload(uploadParam);
@@ -83,6 +83,32 @@ namespace DatingApp.API.Controllers
             }
 
             return BadRequest("Could not add the photo");
+        }
+
+        [HttpPost("{id}/setMain")]
+        public async Task<IActionResult> SetMainPhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+            var user = await _userRepo.GetUserAsync(userId);
+            if(!user.Photos.Any(p => p.Id == id))
+                return Unauthorized();
+            var photoFromRepo = user.Photos.FirstOrDefault(p => p.Id == id);//await _userRepo.GetPhotoAsync(id);
+            if(photoFromRepo.IsMain)
+                return BadRequest("This photo is already main.");
+            
+            var currentPhoto = user.Photos.FirstOrDefault(p => p.IsMain);
+            if (currentPhoto != null)
+                currentPhoto.IsMain = false;
+            
+            photoFromRepo.IsMain = true;
+
+            if(await _userRepo.SaveAllAsync())
+                return NoContent();
+            
+            return BadRequest("Could not set photo to main.");
         }
 
     }

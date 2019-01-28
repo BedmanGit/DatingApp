@@ -26,6 +26,7 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberEditResolver } from './_resolver/member-edit-resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 export function tokenGetter() {
@@ -60,7 +61,8 @@ export function tokenGetter() {
             blacklistedRoutes: ['localhost:5000/api/auth']
          }
       }),
-      NgxGalleryModule
+      NgxGalleryModule,
+      FileUploadModule
    ],
    providers: [
       AuthService,
