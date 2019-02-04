@@ -19,6 +19,7 @@ uploader: FileUploader;
 hasBaseDropZoneOver = false;
 hasAnotherDropZoneOver = false;
 baseUrl = environment.baseUrl;
+
   constructor(private authService: AuthService, private userService: UserService, private alertifyService: AlertifyService) { }
 
   ngOnInit() {
@@ -61,7 +62,9 @@ baseUrl = environment.baseUrl;
       this.alertifyService.success('Photo is set as main photo.');
       this.photos.filter(p => p.isMain)[0].isMain = false;
       photo.isMain = true;
-      this.mainPhotoUrl.emit(photo.url);
+      this.authService.changeMemberProfilePicture(photo.url);
+      this.authService.currentUser.photoUrl = photo.url;
+      localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
     }, error => {
       this.alertifyService.error(error);
     });

@@ -14,6 +14,7 @@ import { Photo } from 'src/app/_models/photo';
 })
 export class MemberEditComponent implements OnInit {
 user: User;
+currentUserPhotoUrl: string;
 @ViewChild('editForm') editForm: NgForm;
 @HostListener('window:beforeunload', ['$event'])
 unloadNotification($event: any) {
@@ -28,6 +29,7 @@ unloadNotification($event: any) {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+    this.auth.currentUserPhotoUrl.subscribe(p => this.currentUserPhotoUrl = p);
   }
 
   setMain(photoUrl: string) {
