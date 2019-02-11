@@ -7,7 +7,7 @@ namespace DatingApp.API.Data
     public interface IUserRepository
     {
         void Add<T>(T entity) where T : class;
-        void ADelete<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
         Task<bool> SaveAllAsync();
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserAsync(int id);
