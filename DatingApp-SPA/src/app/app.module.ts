@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { FormsModule, ReactiveFormsModule, NG_VALIDATORS } from '@angular/forms';
+import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgxGalleryModule } from 'ngx-gallery';
@@ -27,6 +27,11 @@ import { MemberEditResolver } from './_resolver/member-edit-resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { QuestionControlService } from './_services/question-control.service';
+import { QuestionService } from './_services/question.service';
+import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
+import { NgbdDatepickerPopupComponent } from './_helpers/NgbdDatepickerPopup';
 
 
 export function tokenGetter() {
@@ -45,12 +50,16 @@ export function tokenGetter() {
       MemberEditComponent,
       ListsComponent,
       MessagesComponent,
-      PhotoEditorComponent
+      PhotoEditorComponent,
+      DynamicFormComponent,
+      DynamicFormQuestionComponent,
+      NgbdDatepickerPopupComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ReactiveFormsModule,
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
@@ -62,7 +71,8 @@ export function tokenGetter() {
          }
       }),
       NgxGalleryModule,
-      FileUploadModule
+      FileUploadModule,
+      BsDatepickerModule.forRoot()
    ],
    providers: [
       AuthService,
@@ -72,7 +82,9 @@ export function tokenGetter() {
       PreventUnsavedChanges,
       MemberDetailResolver,
       MemberListResolver,
-      MemberEditResolver
+      MemberEditResolver,
+      QuestionControlService,
+      QuestionService
    ],
    bootstrap: [
       AppComponent
