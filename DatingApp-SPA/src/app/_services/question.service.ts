@@ -14,6 +14,7 @@ export class QuestionService {
     const questions: QuestionBase<any>[] = [
 
       new DropdownQuestion({
+        questionId: 1,
         key: 'site',
         label: 'Site Number',
         options: [
@@ -26,29 +27,34 @@ export class QuestionService {
       }),
 
       new TextboxQuestion({
+        questionId: 2,
         key: 'firstName',
         label: 'First name',
         value: 'James',
         required: true,
-        order: 2,
-        dependencies: 'test'
+        order: 2
       }),
 
       new TextboxQuestion({
+        questionId: 3,
         key: 'lastName',
         label: 'Last name',
         value: 'Chen',
-        required: true,
+      //  required: true,
         order: 3,
-        dependencies: 'test'
+        showIf: '{"showIfQuestions":[{"1":"1","2":"James"}]}',
+        // tslint:disable-next-line:max-line-length
+        validations: '{"requiredQuestions":[{"1":"1","2":"James"}],"required":"true","email":"false","maxLength":"2"}'
       }),
       new TextboxQuestion({
+        questionId: 4,
         key: 'emailAddress',
         label: 'Email',
         type: 'email',
         order: 4
       }),
       new DatePicker({
+        questionId: 5,
         key: 'dob',
         label: 'Birthday',
         order: 5

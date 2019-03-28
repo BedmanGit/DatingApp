@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QuestionBase } from '../_models/QuestionBase';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { forbiddenSameNameValidator } from '../_helpers/custom-validation';
+import { customerValidations } from '../_helpers/custom-validation';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,9 @@ export class QuestionControlService {
   const group: any = {};
 
     questions.forEach(question => {
-      group[question.key] = question.required ? new FormControl(question.value || '',
-           Validators.required) // , forbiddenSameNameValidator()
-                                              : new FormControl(question.value || '');
+      // tslint:disable-next-line:max-line-length
+      group[question.key] = question.required ?
+        new FormControl(question.value || '', {validators: customerValidations}) : new FormControl(question.value || '');
     });
     return new FormGroup(group);
   }

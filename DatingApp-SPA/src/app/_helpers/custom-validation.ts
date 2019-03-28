@@ -1,10 +1,8 @@
-import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { ValidatorFn, ValidationErrors, FormControl } from '@angular/forms';
 
-export function forbiddenSameNameValidator(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-        const fname = control.get('firstName');
-        const lname = control.get('lastName');
-      const forbidden = fname.value === 'test';
-      return forbidden ? {'forbiddenName': {value: control.value}} : null;
-    };
-  }
+export const customerValidations: ValidatorFn = (control: FormControl):
+ValidationErrors | null => {
+  const validations = control.get('requiredQuestions');
+
+return null;
+};
