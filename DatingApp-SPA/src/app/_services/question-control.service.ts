@@ -15,9 +15,10 @@ export class QuestionControlService {
 
     questions.forEach(question => {
       // tslint:disable-next-line:max-line-length
-      group[question.key] = question.required ?
-        new FormControl(question.value || '', {validators: customerValidations}) : new FormControl(question.value || '');
+      group[question.key] = question.validations !== null && question.validations !== '' ?
+      // new FormControl(question.value || '', {validators: customerValidations}) : new FormControl(question.value || '');
+      new FormControl(question.value || '') : new FormControl(question.value || '');
     });
-    return new FormGroup(group);
+    return new FormGroup(group, customerValidations(questions));
   }
 }
