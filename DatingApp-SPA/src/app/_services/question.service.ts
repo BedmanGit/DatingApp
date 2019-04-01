@@ -12,7 +12,6 @@ export class QuestionService {
   getQuestions() {
 
     const questions: QuestionBase<any>[] = [
-
       new DropdownQuestion({
         questionId: 1,
         key: 'site',
@@ -23,18 +22,22 @@ export class QuestionService {
           {key: '003',   value: 'Staten Island'},
           {key: '004', value: 'Browns'}
         ],
+        value: '001',
+        // tslint:disable-next-line:max-line-length
+        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
         order: 1
       }),
-
       new TextboxQuestion({
         questionId: 2,
         key: 'firstName',
         label: 'First name',
         value: 'James',
-        required: true,
+        // required: true,
+        maxLength: 6,
+        // tslint:disable-next-line:max-line-length
+        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
         order: 2
       }),
-
       new TextboxQuestion({
         questionId: 3,
         key: 'lastName',
@@ -44,7 +47,7 @@ export class QuestionService {
         order: 3,
         showIf: '{"showIfQuestions":[{"1":"1","2":"James"}]}',
         // tslint:disable-next-line:max-line-length
-        validations: '{"requiredQuestions":[{"1":"1","2":"James"}],"required":"true","email":"false","maxLength":"2"}'
+        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
       }),
       new TextboxQuestion({
         questionId: 4,

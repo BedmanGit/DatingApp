@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QuestionBase } from '../_models/QuestionBase';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { customerValidations } from '../_helpers/custom-validation';
+import { customerValidations, customerValidations2 } from '../_helpers/custom-validation';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,17 @@ export class QuestionControlService {
     questions.forEach(question => {
       // tslint:disable-next-line:max-line-length
       group[question.key] = question.validations !== null && question.validations !== '' ?
-      // new FormControl(question.value || '', {validators: customerValidations}) : new FormControl(question.value || '');
-      new FormControl(question.value || '') : new FormControl(question.value || '');
+       // tslint:disable-next-line:max-line-length
+       new FormControl(question.value || '',
+       [
+        customerValidations2(question.validations),
+        question.maxLength !== null ?  Validators.maxLength(question.maxLength) : Validators.maxLength(5000)
+       ]) : new FormControl(question.value || '');
+
+      // new FormControl(question.value || '') : new FormControl(question.value || '');
     });
-    return new FormGroup(group, customerValidations(questions));
+    console.log('toFormGroup called');
+    // return new FormGroup(group, customerValidations(questions));
+    return new FormGroup(group);
   }
 }
