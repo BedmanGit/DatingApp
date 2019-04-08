@@ -24,7 +24,7 @@ export class QuestionService {
         ],
         value: '001',
         // tslint:disable-next-line:max-line-length
-        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
+        customValidations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James"}',
         order: 1
       }),
       new TextboxQuestion({
@@ -32,10 +32,13 @@ export class QuestionService {
         key: 'firstName',
         label: 'First name',
         value: 'James',
-        // required: true,
-        maxLength: 6,
+        htmlValidations: {
+          required: true,
+          minLength: 4,
+          maxLength: 6
+        },
         // tslint:disable-next-line:max-line-length
-        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
+        customValidations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James"}',
         order: 2
       }),
       new TextboxQuestion({
@@ -45,15 +48,24 @@ export class QuestionService {
         value: 'Chen',
       //  required: true,
         order: 3,
+        htmlValidations: {
+          required: true,
+          minLength: 4,
+          maxLength: 6
+        },
         showIf: '{"showIfQuestions":[{"1":"1","2":"James"}]}',
         // tslint:disable-next-line:max-line-length
-        validations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James","required":"true","email":"false","maxLength":"2"}',
+        customValidations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James"}',
       }),
       new TextboxQuestion({
         questionId: 4,
         key: 'emailAddress',
         label: 'Email',
         type: 'email',
+        htmlValidations: {
+          required: true,
+          email: true
+        },
         order: 4
       }),
       new DatePicker({

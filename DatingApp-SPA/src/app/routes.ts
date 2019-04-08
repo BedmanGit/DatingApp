@@ -25,9 +25,9 @@ export const appRoutes: Routes = [
       { path: 'member/edit', component: MemberEditComponent, resolve: {user: MemberEditResolver}
         , canDeactivate: [PreventUnsavedChanges]},
       { path: 'messages', component: MessagesComponent },
-      { path: 'lists', component: ListsComponent },
-      { path: 'dynamicform', component: DynamicFormComponent }
+      { path: 'lists', component: ListsComponent }
     ]
   },
+  { path: 'dynamicform', component: DynamicFormComponent },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

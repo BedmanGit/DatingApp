@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { QuestionBase } from '../_models/QuestionBase';
 import { ValidationError } from '../_models/ValidationError';
 
@@ -11,25 +11,48 @@ import { ValidationError } from '../_models/ValidationError';
 export class DynamicFormQuestionComponent implements OnInit {
   @Input() question: QuestionBase<any>;
   @Input() form: FormGroup;
-  validError: ValidationError;
+  valErrors: ValidationError;
+  validErrors: string[];
+  get isValid() { return this.form.controls[this.question.key].valid; }
 
-  validate(key: string) {
-    if (!this.form.controls[key].valid) {
-      const errObj = {
-        Question: key,
-        Valid: this.form.controls[key].valid,
-        ErrorMessages: []
-      };
-      // tslint:disable-next-line:forin
-      for (const err in this.form.controls[key].errors) {
-        errObj.ErrorMessages.push(err);
+    validate(ctrl: string): void {
+      if (this.form.controls[ctrl]) {
+        this.resetErrorMessageObj();
+        if (this.form.controls[ctrl].errors) {
+          this.validErrors = Object.keys(this.form.controls[ctrl].errors);
+        }
+
+      /*
+      if (this.form.controls[ctrl]) {
+        this.resetErrorMessageObj();
+
+        if (this.form.controls[ctrl].invalid) {
+          this.valErrors.Question = ctrl;
+          this.valErrors.Valid = false;
+          // tslint:disable-next-line: forin
+          for (const err in this.form.controls[ctrl].errors) {
+              this.valErrors.ErrorMessages.push(err);
+          }
+        }*/
       }
-      this.validError = errObj;
     }
 
+    keys(obj: any) {
+      return Object.keys(obj);
+    }
+  resetErrorMessageObj() {
+    this.valErrors = {
+      Question: '',
+      Valid: true,
+      ErrorMessages: []
+    };
+    this.validErrors = null;
   }
 
-  constructor() { }
+  constructor() {
+    this.resetErrorMessageObj();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

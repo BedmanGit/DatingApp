@@ -42,8 +42,8 @@ export function customerValidations(questions: QuestionBase<any>[]): ValidatorFn
     Object.keys(g.controls).forEach((name) => {
       console.log(name);
         const question = questions.filter(q => q.key === name)[0];
-        if (question.validations !== undefined && question.validations !== '') {
-          const rules = JSON.parse(question.validations);
+        if (question.customValidations !== undefined && question.customValidations !== '') {
+          const rules = JSON.parse(question.customValidations);
           if (rules.requiredQuestions !== null) {
             rules.requiredQuestions.forEach(requiredQuestionsObj => {
               valid = true;

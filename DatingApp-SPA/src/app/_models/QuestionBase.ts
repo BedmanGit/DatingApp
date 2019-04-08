@@ -1,13 +1,26 @@
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
 export class QuestionBase<T> {
     questionId: number;
     value: T;
     key: string;
     label: string;
-    required: boolean;
-    maxLength: number;
     order: number;
     controlType: string;
-    validations: string;
+    htmlValidations: {
+      min: number,
+      max: number,
+      required: boolean,
+      requiredTrue: boolean,
+      email: boolean,
+      minLength: number,
+      maxLength: number,
+      pattern: RegExp,
+      nullValidator: boolean,
+      compose: ValidatorFn[],
+      composeAsync: ValidatorFn[]
+    };
+    customValidations: string;
     showIf: string;
     constructor(options: {
         questionId?: number;
@@ -17,19 +30,31 @@ export class QuestionBase<T> {
         required?: boolean,
         maxLength?: number,
         order?: number,
+        htmlValidations?: {
+          min: number,
+          max: number,
+          required: boolean,
+          requiredTrue: boolean,
+          email: boolean,
+          minLength: number,
+          maxLength: number,
+          pattern: RegExp,
+          nullValidator: boolean,
+          compose: ValidatorFn[],
+          composeAsync: ValidatorFn[]
+        },
         controlType?: string,
-        validations?: string,
+        customValidations?: string,
         showIf?: string
       } = {}) {
       this.questionId = options.questionId === undefined ? options.order : options.questionId;
       this.value = options.value;
       this.key = options.key || '';
       this.label = options.label || '';
-      this.required = !!options.required;
-      this.maxLength = options.maxLength === undefined ? null : options.maxLength;
       this.order = options.order === undefined ? 1 : options.order;
       this.controlType = options.controlType || '';
-      this.validations = options.validations || '';
+      this.htmlValidations = options.htmlValidations;
+      this.customValidations = options.customValidations || '';
       this.showIf = options.showIf || '';
     }
 }
