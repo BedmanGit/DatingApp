@@ -6,7 +6,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   template: `<div class="form-group" [formGroup]="formgp" >
   <input type="text"
         placeholder="Datepicker" [formControlName]="key"
-        class="form-control ml-4 W-100" name="key"
+        class="form-control" name="key"
         bsDatepicker>
 </div>`
 })

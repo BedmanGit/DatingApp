@@ -12,6 +12,9 @@ import { QuestionService } from '../_services/question.service';
 export class DynamicFormComponent implements OnInit {
   questions: QuestionBase<any>[] = [];
   form: FormGroup;
+
+
+
   payLoad = '';
 
   constructor(private qs: QuestionService, private qcs: QuestionControlService) {

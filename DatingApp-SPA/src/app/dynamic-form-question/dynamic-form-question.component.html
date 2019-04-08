@@ -1,40 +1,40 @@
-<div [formGroup]="form">
-  <label [attr.for]="question.key">{{question.label}}</label>
+<div [formGroup]="form" class="form-row mt-4">
+  <div class="col-sm-2">
+    <label [attr.for]="question.key">{{question.label}}</label>
+  </div>
 
-  <div [ngSwitch]="question.controlType">
+  <div [ngSwitch]="question.controlType" class="col-sm-6">
     <!-- textbox -->
-    <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"/> 
-    <!-- <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type"/> -->
+    <input *ngSwitchCase="'textbox'" [formControlName]="question.key" [id]="question.key" [type]="question.type" 
+    class="form-control"/>
+
     <!-- dropdown -->
-    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" 
+    class="form-control">
       <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
     </select>
     <!-- datepicker -->
-    <app-ngbd-datepicker-popup [key]="question.key" [formgp]="form" *ngSwitchCase="'datePicker'">
+    <app-ngbd-datepicker-popup [key]="question.key" [formgp]="form" *ngSwitchCase="'datePicker'" >
     </app-ngbd-datepicker-popup>
-
-  </div>
-  <!-- <div *ngIf="validErrors !== undefined && validErrors !== null && validErrors !== ''" class="alert alert-danger"> -->
-       <!-- <div *ngFor="let errorMsg of Object.keys(this.form.controls[this.question.key].errors)" >
-        <span>{{errorMsg}}</span>
-      </div> -->
-  <div *ngIf="this.form.controls[this.question.key].invalid && this.form.controls[this.question.key].dirty && 
-              this.form.controls[this.question.key].errors !== null && this.form.controls[this.question.key].errors !== undefined" class="alert alert-danger">
+    
+    <!-- Errors -->
+    <div class="text-danger"
+      *ngIf="this.form.controls[this.question.key].invalid && this.form.controls[this.question.key].dirty 
+              && this.form.controls[this.question.key].touched &&
+              this.form.controls[this.question.key].errors !== null && this.form.controls[this.question.key].errors !== undefined">
       <div *ngFor="let errorMsg of keys(this.form.controls[this.question.key].errors)" >
-          <span>{{errorMsg}}</span>
-        </div>
-  </div>
-  <!-- <div *ngIf="valErrors !== undefined && !valErrors.Valid" class="alert alert-danger">
-    <div *ngFor="let errorMsg of valErrors.ErrorMessages" >
-      <span>{{errorMsg}}</span>
+        <small>{{errorMsg}}</small>
+      </div>
     </div>
-  </div> -->
 
-  <!-- <div *ngIf="validError !== undefined && !validError.Valid" >
-    <div *ngFor="let errMsg of validError.ErrorMessages">
-      <span *ngIf="errMsg === 'maxlength'" class='text-danger'>Exceeds maximum length</span>
-      <span *ngIf="errMsg !== 'maxlength'" class='text-danger'>{{errMsg}}</span>
+
+    <div *ngIf="this.form.invalid && this.form.dirty && this.form.touched &&
+              this.question.customValidations !== '' &&
+              this.form.hasError('customValidations')"  class="text-danger">
+        <small>Must be James from Brooklyn!</small>
     </div>
-  </div> -->
+
+    
+  </div>
 
 </div>

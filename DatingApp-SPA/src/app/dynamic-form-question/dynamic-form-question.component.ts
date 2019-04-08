@@ -15,12 +15,12 @@ export class DynamicFormQuestionComponent implements OnInit {
   validErrors: string[];
   get isValid() { return this.form.controls[this.question.key].valid; }
 
-    validate(ctrl: string): void {
-      if (this.form.controls[ctrl]) {
-        this.resetErrorMessageObj();
-        if (this.form.controls[ctrl].errors) {
-          this.validErrors = Object.keys(this.form.controls[ctrl].errors);
-        }
+  validate(ctrl: string): void {
+    if (this.form.controls[ctrl]) {
+      this.resetErrorMessageObj();
+      if (this.form.controls[ctrl].errors) {
+        this.validErrors = Object.keys(this.form.controls[ctrl].errors);
+      }
 
       /*
       if (this.form.controls[ctrl]) {
@@ -34,12 +34,26 @@ export class DynamicFormQuestionComponent implements OnInit {
               this.valErrors.ErrorMessages.push(err);
           }
         }*/
-      }
     }
+  }
 
-    keys(obj: any) {
+  keys(obj: any) {
+    if (obj !== null && obj !== undefined) {
       return Object.keys(obj);
+    } else {
+      return [];
     }
+  }
+  isEmpty(obj: any) {
+    return obj.length === 0;
+  }
+  invalid(obj: any) {
+    if (obj.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   resetErrorMessageObj() {
     this.valErrors = {
       Question: '',

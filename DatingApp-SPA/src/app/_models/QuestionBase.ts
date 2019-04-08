@@ -21,7 +21,7 @@ export class QuestionBase<T> {
       composeAsync: ValidatorFn[]
     };
     customValidations: string;
-    showIf: string;
+    showIf: Array<T>;
     constructor(options: {
         questionId?: number;
         value?: T,
@@ -45,7 +45,7 @@ export class QuestionBase<T> {
         },
         controlType?: string,
         customValidations?: string,
-        showIf?: string
+        showIf?: Array<T>
       } = {}) {
       this.questionId = options.questionId === undefined ? options.order : options.questionId;
       this.value = options.value;
@@ -55,6 +55,6 @@ export class QuestionBase<T> {
       this.controlType = options.controlType || '';
       this.htmlValidations = options.htmlValidations;
       this.customValidations = options.customValidations || '';
-      this.showIf = options.showIf || '';
+      this.showIf = options.showIf;
     }
 }

@@ -18,9 +18,9 @@ export class QuestionControlService {
       // tslint:disable-next-line:max-line-length
       group[question.key] = new FormControl(question.value || '');
 
-      if (question.customValidations !== null && question.customValidations !== '') {
+     /* if (question.customValidations !== null && question.customValidations !== '') {
         validatorFns.push(customerValidations2(question.customValidations));
-      }
+      }*/
 
       // tslint:disable-next-line: forin
       for (const obj in question.htmlValidations) {
@@ -51,6 +51,6 @@ export class QuestionControlService {
     });
     console.log('toFormGroup called');
     // return new FormGroup(group, customerValidations(questions));
-    return new FormGroup(group);
+    return new FormGroup(group, customerValidations(questions));
   }
 }

@@ -53,7 +53,7 @@ export class QuestionService {
           minLength: 4,
           maxLength: 6
         },
-        showIf: '{"showIfQuestions":[{"1":"1","2":"James"}]}',
+        showIf: [{site: '001'}, {firstName: 'James'}],
         // tslint:disable-next-line:max-line-length
         customValidations: '{"requiredQuestions":[{"site":"001","firstName":"James"}], "requiredQuestionsMsg":"Required questions: site = 001, firstName = James"}',
       }),
@@ -72,6 +72,9 @@ export class QuestionService {
         questionId: 5,
         key: 'dob',
         label: 'Birthday',
+        htmlValidations: {
+          required: true
+        },
         order: 5
       })
     ];
