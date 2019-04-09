@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { QuestionBase } from '../_models/QuestionBase';
 import { ValidationError } from '../_models/ValidationError';
+import { QuestionService } from '../_services/question.service';
 
 @Component({
   selector: 'app-dynamic-form-question',
@@ -11,8 +12,18 @@ import { ValidationError } from '../_models/ValidationError';
 export class DynamicFormQuestionComponent implements OnInit {
   @Input() question: QuestionBase<any>;
   @Input() form: FormGroup;
-  valErrors: ValidationError;
   validErrors: string[];
+
+  updateQuestions(key: string): void {
+    let str = '';
+    Object.keys(this.form.controls).forEach(e => {
+      const _this = this.form;
+      str = (str === '' ? '' : str + ',') + '"' + e + '":"' + _this.controls[e].value + '"' ;
+    });
+    const qa = JSON.parse('{' + str + '}');
+    this.qs.updateHiddenQuestions(this.qs.getQuestions(), qa);
+  }
+
   get isValid() { return this.form.controls[this.question.key].valid; }
 
   validate(ctrl: string): void {
@@ -21,19 +32,6 @@ export class DynamicFormQuestionComponent implements OnInit {
       if (this.form.controls[ctrl].errors) {
         this.validErrors = Object.keys(this.form.controls[ctrl].errors);
       }
-
-      /*
-      if (this.form.controls[ctrl]) {
-        this.resetErrorMessageObj();
-
-        if (this.form.controls[ctrl].invalid) {
-          this.valErrors.Question = ctrl;
-          this.valErrors.Valid = false;
-          // tslint:disable-next-line: forin
-          for (const err in this.form.controls[ctrl].errors) {
-              this.valErrors.ErrorMessages.push(err);
-          }
-        }*/
     }
   }
 
@@ -55,15 +53,10 @@ export class DynamicFormQuestionComponent implements OnInit {
     }
   }
   resetErrorMessageObj() {
-    this.valErrors = {
-      Question: '',
-      Valid: true,
-      ErrorMessages: []
-    };
     this.validErrors = null;
   }
 
-  constructor() {
+  constructor(private qs: QuestionService) {
     this.resetErrorMessageObj();
   }
 

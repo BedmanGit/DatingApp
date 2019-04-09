@@ -49,7 +49,6 @@ export class QuestionControlService {
       }
       group[question.key].setValidators(Validators.compose(validatorFns));
     });
-    console.log('toFormGroup called');
     // return new FormGroup(group, customerValidations(questions));
     return new FormGroup(group, customerValidations(questions));
   }

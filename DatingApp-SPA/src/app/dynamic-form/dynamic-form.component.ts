@@ -20,18 +20,17 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   payLoad = '';
 
   constructor(private qs: QuestionService, private qcs: QuestionControlService) {
-    this.questions = qs.getQuestions();
+    // this.questions = qs.getQuestions();
 
-    this.subscription = qs.GetHiddenQuestions(this.questions)
-    .pipe(
-      map((hideArray: any) => {
-        this.questions.forEach(q => {
-          if (hideArray.includes(q.key)) {
-            q.show = false;
-          }
-        });
-      })
-    ).subscribe();
+    this.subscription = qs.getHiddenQuestions().subscribe(
+      data => {
+        this.questions = data;
+      }, error => {
+        console.log(error);
+      }, () => {
+        console.log('complete');
+      }
+    );
   }
 
   ngOnInit() {
