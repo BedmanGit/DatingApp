@@ -1,27 +1,37 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionBase } from '../_models/QuestionBase';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuestionControlService } from '../_services/question-control.service';
 import { QuestionService } from '../_services/question.service';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css']
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnDestroy {
+
+
   questions: QuestionBase<any>[] = [];
   form: FormGroup;
-
+  subscription: Subscription;
   payLoad = '';
 
   constructor(private qs: QuestionService, private qcs: QuestionControlService) {
     this.questions = qs.getQuestions();
-    qs.GetHiddenQuestions(this.questions).subscribe(
-      next => {
 
-    });
+    this.subscription = qs.GetHiddenQuestions(this.questions)
+    .pipe(
+      map((hideArray: any) => {
+        this.questions.forEach(q => {
+          if (hideArray.includes(q.key)) {
+            q.show = false;
+          }
+        });
+      })
+    ).subscribe();
   }
 
   ngOnInit() {
@@ -37,4 +47,8 @@ export class DynamicFormComponent implements OnInit {
     this.payLoad = JSON.stringify(this.form.value);
   }
 
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

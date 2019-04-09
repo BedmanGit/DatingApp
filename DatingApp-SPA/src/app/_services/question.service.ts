@@ -86,8 +86,10 @@ export class QuestionService {
   GetHiddenQuestions(questions: QuestionBase<any>[]): BehaviorSubject<any> {
     const hideArray = [];
     questions.forEach(q => {
-      if (q.showIf !== null && q.showIf.length > 0) {
-        hideArray.push(q.key);
+      if (q.showIf !== null && q.showIf !== undefined) {
+        if (q.showIf.length > 0) {
+          hideArray.push(q.key);
+        }
       }
     });
     const hiddenSubject = new BehaviorSubject<any>(hideArray);
