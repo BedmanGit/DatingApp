@@ -3,6 +3,7 @@ import { QuestionBase } from '../_models/QuestionBase';
 import { DropdownQuestion } from '../_models/DropdownQuestion';
 import { TextboxQuestion } from '../_models/TextboxQuestion';
 import { DatePicker } from '../_models/DatePicker';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class QuestionService {
@@ -81,4 +82,16 @@ export class QuestionService {
 
     return questions.sort((a, b) => a.order - b.order);
   }
+
+  GetHiddenQuestions(questions: QuestionBase<any>[]): BehaviorSubject<any> {
+    const hideArray = [];
+    questions.forEach(q => {
+      if (q.showIf !== null && q.showIf.length > 0) {
+        hideArray.push(q.key);
+      }
+    });
+    const hiddenSubject = new BehaviorSubject<any>(hideArray);
+    return hiddenSubject;
+  }
+
 }

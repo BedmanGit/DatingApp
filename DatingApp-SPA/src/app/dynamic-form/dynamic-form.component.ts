@@ -3,6 +3,7 @@ import { QuestionBase } from '../_models/QuestionBase';
 import { FormGroup, FormControl } from '@angular/forms';
 import { QuestionControlService } from '../_services/question-control.service';
 import { QuestionService } from '../_services/question.service';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-form',
@@ -13,12 +14,14 @@ export class DynamicFormComponent implements OnInit {
   questions: QuestionBase<any>[] = [];
   form: FormGroup;
 
-
-
   payLoad = '';
 
   constructor(private qs: QuestionService, private qcs: QuestionControlService) {
     this.questions = qs.getQuestions();
+    qs.GetHiddenQuestions(this.questions).subscribe(
+      next => {
+
+    });
   }
 
   ngOnInit() {
